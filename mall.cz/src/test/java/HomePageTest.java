@@ -10,6 +10,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import javax.net.ssl.HttpsURLConnection;
 import java.time.Duration;
+import java.time.OffsetTime;
 
 import static io.github.bonigarcia.wdm.WebDriverManager.firefoxdriver;
 
@@ -71,6 +72,9 @@ public class HomePageTest {
         WebDriver browser = WebDriverManager.firefoxdriver().create();
         WebDriverWait browserWait = new WebDriverWait(browser, Duration.ofSeconds(10));
         browser.get("https://mall.cz");
+        //accept cookie
+        WebElement cookiesAcceptButton = browser.findElement(By.cssSelector(".legal-consent__button-container"));
+        cookiesAcceptButton.click();
 
         //prices and delivery
         browserWait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(".list-item__link__text"))).click();
@@ -86,13 +90,67 @@ public class HomePageTest {
         WebDriver browser = WebDriverManager.firefoxdriver().create();
         WebDriverWait browserWait = new WebDriverWait(browser, Duration.ofSeconds(10));
         browser.get("https://mall.cz");
+        //accept cookie
+        WebElement cookiesAcceptButton = browser.findElement(By.cssSelector(".legal-consent__button-container"));
+        cookiesAcceptButton.click();
 
         //everything about shopping
-        browser.findElement(By.cssSelector(".list-item__link__text")).click();
+        //browser.findElement(By.cssSelector(".list-item__link__text")).click();
+        browserWait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(".list-item__link .nuxt-link-exact-active .nuxt-link-active .list-item__link--vertical"))).click();
+
         //Complains
-        browser.findElement(By.cssSelector(".lst-guide-item-body .cnt")).click();
-        browser.findElement(By.id("servis")).click();
+        browserWait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(".slst-guide-item-head .cnt"))).click();
+        //browser.findElement(By.cssSelector(".lst-guide-item-body .cnt")).click();
+
+        //servis
+        browserWait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(".textace"))).click();
+        //browser.findElement(By.id("servis")).click();
+
+        //asertace
+        WebElement button = browser.findElement(By.id("servis"));
+        Assertions.assertTrue(button.isDisplayed());
+    }
+
+    @Test
+    void TvTest () {
+        WebDriver browser = WebDriverManager.firefoxdriver().create();
+        WebDriverWait browserWait = new WebDriverWait(browser, Duration.ofSeconds(10));
+        browser.get("https://mall.cz");
+        //accept cookie
+        WebElement cookiesAcceptButton = browser.findElement(By.cssSelector(".legal-consent__button-container"));
+        cookiesAcceptButton.click();
+
+        //click on TV, audio, video
+        browser.findElement(By.cssSelector(".desktop-menu__item-link")).click();
+        //Smart TV
+        //browser.findElement(By.xpath("//a[@href='/smart-tv']")).click();
+        browser.findElement(By.cssSelector(".menu-container__link")).click();
+
+        //Samsung TV
+        browserWait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(".bs__name"))).click();
+        //browser.findElement(By.cssSelector(".bs__name")).click();
+        var expectedValue = browser.findElement(By.cssSelector(".bs__name")).getText();
+
+        //add to card
+        browser.findElement(By.cssSelector(".rounded-button .add-to-cart-list")).click();
+
+        //go to the card
+        browser.findElement(By.cssSelector(".cross-sell__button__to-cart__text")).click();
+
+        var actualValue = browser.findElement(By.cssSelector(".cart-overview-item-row__title-and-params")).getText();
+
+        //2 items
+        browser.findElement(By.cssSelector(".article-counter__btn article-counter__btn--plus")).click();
+
+        var counter = browser.findElement(By.cssSelector(".article-counter__input")).getText();
+
+        //assert item(TV)
+        Assertions.assertEquals(expectedValue, actualValue);
+        //assert count of items
+        Assertions.assertEquals("2", counter);
+
     }
 }
+
 
 
