@@ -80,13 +80,16 @@ public class HomePageTest {
     }
     @Test
     void ComplaintsTest () {
-        //loading browser and web
+        //open browser
         WebDriver browser = WebDriverManager.firefoxdriver().create();
+        //add time for waiting 10 s
         WebDriverWait browserWait = new WebDriverWait(browser, Duration.ofSeconds(10));
+        //loading the web
         browser.get("https://mall.cz");
         //accept cookie
         WebElement cookiesAcceptButton = browser.findElement(By.cssSelector(".legal-consent__button-container"));
         cookiesAcceptButton.click();
+
         //click on everything about shopping
         browserWait.until(ExpectedConditions.elementToBeClickable(By.xpath("//a[@href='/vse-nakupu']"))).click();
         //click on Complains
@@ -94,49 +97,42 @@ public class HomePageTest {
         //click on servis
         browserWait.until(ExpectedConditions.elementToBeClickable(By.xpath("//a[@href='/reklamace-zbozi']"))).click();
 
-        //asertace
+        //asertace presents of Partner servis
         WebElement button = browser.findElement(By.id("servis"));
         Assertions.assertTrue(button.isDisplayed());
     }
 
     @Test
     void CoffeeTest () {
-        //loading browser and web
+        //open browser
         WebDriver browser = WebDriverManager.firefoxdriver().create();
+        //add time for waiting 10 s
         WebDriverWait browserWait = new WebDriverWait(browser, Duration.ofSeconds(10));
+        //loading the web
         browser.get("https://mall.cz");
         //accept cookie
         WebElement cookiesAcceptButton = browser.findElement(By.cssSelector(".legal-consent__button-container"));
         cookiesAcceptButton.click();
 
+        //click on main menu
         browser.findElement(By.cssSelector(".main-menu")).click();
-
-        //click on Spotrebice
+        //click on Appliances
         browser.findElement(By.cssSelector(".desktop-menu__item-link")).click();
-
         //click on Esspresso and coffee maker
         browser.findElement(By.xpath("//a[@href='/espressa-kavovary']")).click();
-
         //click on Coffee maker
         browserWait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(".bs__name"))).click();
-        //browser.findElement(By.cssSelector(".bs__name")).click();
 
         //save an expected name of item
         var expectedValue = browserWait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(".detail__title--desktop"))).getText();
-        //var expectedValue = browser.findElement(By.cssSelector(".detail__title--desktop")).getText();
 
         //click add to card
         browser.findElement(By.cssSelector(".info-box__main-btn .add-to-cart-list")).click();
-
         //go to the card
         browserWait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(".cross-sell__button__to-cart__text"))).click();
-        //browser.findElement(By.cssSelector(".cross-sell__button__to-cart__text")).click();
 
         //variable for actual value
         var actualValue = browserWait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(".cart-overview-item-title"))).getText();
-        //var actualValue = browser.findElement(By.cssSelector(".cart-overview-item-title")).getText();
-
-
         //variable for counter
         var counter = browser.findElement(By.cssSelector(".article-counter__input")).getText();
         //2 items
