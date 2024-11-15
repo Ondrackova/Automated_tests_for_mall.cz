@@ -1,5 +1,4 @@
 import io.github.bonigarcia.wdm.WebDriverManager;
-import org.assertj.core.api.Assert;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
@@ -8,11 +7,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-import javax.net.ssl.HttpsURLConnection;
 import java.time.Duration;
-import java.time.OffsetTime;
-
-import static io.github.bonigarcia.wdm.WebDriverManager.firefoxdriver;
 
 public class HomePageTest {
 
@@ -87,24 +82,19 @@ public class HomePageTest {
     }
     @Test
     void ComplaintsTest () {
+        //loading browser and web
         WebDriver browser = WebDriverManager.firefoxdriver().create();
         WebDriverWait browserWait = new WebDriverWait(browser, Duration.ofSeconds(10));
         browser.get("https://mall.cz");
         //accept cookie
         WebElement cookiesAcceptButton = browser.findElement(By.cssSelector(".legal-consent__button-container"));
         cookiesAcceptButton.click();
-
-        //everything about shopping
-        //browser.findElement(By.cssSelector(".list-item__link__text")).click();
-        browserWait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(".list-item__link .nuxt-link-exact-active .nuxt-link-active .list-item__link--vertical"))).click();
-
-        //Complains
-        browserWait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(".slst-guide-item-head .cnt"))).click();
-        //browser.findElement(By.cssSelector(".lst-guide-item-body .cnt")).click();
-
-        //servis
-        browserWait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(".textace"))).click();
-        //browser.findElement(By.id("servis")).click();
+        //click on everything about shopping
+        browserWait.until(ExpectedConditions.elementToBeClickable(By.xpath("//a[@href='/vse-nakupu']"))).click();
+        //click on Complains
+        browserWait.until(ExpectedConditions.elementToBeClickable(By.xpath("//a[@href='/vraceni-reklamace']"))).click();
+        //click on servis
+        browserWait.until(ExpectedConditions.elementToBeClickable(By.xpath("//a[@href='/reklamace-zbozi']"))).click();
 
         //asertace
         WebElement button = browser.findElement(By.id("servis"));
@@ -112,7 +102,8 @@ public class HomePageTest {
     }
 
     @Test
-    void TvTest () {
+    void CoffeeTest () {
+        //loading browser and web
         WebDriver browser = WebDriverManager.firefoxdriver().create();
         WebDriverWait browserWait = new WebDriverWait(browser, Duration.ofSeconds(10));
         browser.get("https://mall.cz");
@@ -120,35 +111,43 @@ public class HomePageTest {
         WebElement cookiesAcceptButton = browser.findElement(By.cssSelector(".legal-consent__button-container"));
         cookiesAcceptButton.click();
 
-        //click on TV, audio, video
-        browser.findElement(By.cssSelector(".desktop-menu__item-link")).click();
-        //Smart TV
-        //browser.findElement(By.xpath("//a[@href='/smart-tv']")).click();
-        browser.findElement(By.cssSelector(".menu-container__link")).click();
+        browser.findElement(By.cssSelector(".main-menu")).click();
 
-        //Samsung TV
+        //click on Spotrebice
+        browser.findElement(By.cssSelector(".desktop-menu__item-link")).click();
+
+        //click on Esspresso and coffee maker
+        browser.findElement(By.xpath("//a[@href='/espressa-kavovary']")).click();
+
+        //click on Coffee maker
         browserWait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(".bs__name"))).click();
         //browser.findElement(By.cssSelector(".bs__name")).click();
-        var expectedValue = browser.findElement(By.cssSelector(".bs__name")).getText();
 
-        //add to card
-        browser.findElement(By.cssSelector(".rounded-button .add-to-cart-list")).click();
+        //save an expected name of item
+        var expectedValue = browserWait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(".detail__title--desktop"))).getText();
+        //var expectedValue = browser.findElement(By.cssSelector(".detail__title--desktop")).getText();
+
+        //click add to card
+        browser.findElement(By.cssSelector(".info-box__main-btn .add-to-cart-list")).click();
 
         //go to the card
-        browser.findElement(By.cssSelector(".cross-sell__button__to-cart__text")).click();
+        browserWait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(".cross-sell__button__to-cart__text"))).click();
+        //browser.findElement(By.cssSelector(".cross-sell__button__to-cart__text")).click();
 
-        var actualValue = browser.findElement(By.cssSelector(".cart-overview-item-row__title-and-params")).getText();
+        //variable for actual value
+        var actualValue = browserWait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(".cart-overview-item-title"))).getText();
+        //var actualValue = browser.findElement(By.cssSelector(".cart-overview-item-title")).getText();
 
-        //2 items
-        browser.findElement(By.cssSelector(".article-counter__btn article-counter__btn--plus")).click();
 
+        //variable for counter
         var counter = browser.findElement(By.cssSelector(".article-counter__input")).getText();
+        //2 items
+        counter += "2";
 
-        //assert item(TV)
+        //assert item(Coffee maker)
         Assertions.assertEquals(expectedValue, actualValue);
         //assert count of items
         Assertions.assertEquals("2", counter);
-
     }
 }
 
