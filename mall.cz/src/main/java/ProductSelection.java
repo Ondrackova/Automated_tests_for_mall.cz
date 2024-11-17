@@ -1,24 +1,30 @@
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
-    public class ProductSelection {
-        WebDriver browser;
+import java.time.Duration;
 
-        //browser inicialization
-        public ProductSelection(WebDriver browser) {
-            this.browser = browser;
-        }
+public class ProductSelection {
+    WebDriver browser;
+    WebDriverWait browserWait;
 
-        void ShowMoreAboutProduct () {
-            browser.findElement(By.cssSelector("description-accordion__open")).click();
+    //browser inicialization
+    public ProductSelection(WebDriver browser) {
+        this.browser = browser;
+        this.browserWait = new WebDriverWait(browser, Duration.ofSeconds(5));
+    }
+
+    void ShowMoreAboutProduct () {
+            browserWait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("description-accordion__open"))).click();
         }
 
         void SelectPopularProduct (int index) {
-            browser.findElements(By.cssSelector("bs__name")).get(index).click();
+            browserWait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("bs__name"))).click();
         }
 
         void ShowMorePopularProducts () {
-            browser.findElement(By.cssSelector("bs__show-more-link")).click();
+            browserWait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("bs__show-more-link"))).click();
         }
 
     }

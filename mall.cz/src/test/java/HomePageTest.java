@@ -20,15 +20,6 @@ public class HomePageTest {
     MainMenu Menu;
     Product productPage;
 
-    //freeze a browser for 5 s
-   void waitFor(int seconds) {
-        try {
-            Thread.sleep(seconds * 5000);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
     @BeforeEach
     void beforeTest() {
         //loading the web
@@ -60,28 +51,22 @@ public class HomePageTest {
         Menu.MainMenuAppliances();
 
         //click on hair dryers /feny
-        browser.findElement(By.xpath("//a[@href='/feny']")).click();
+        browserWait.until(ExpectedConditions.elementToBeClickable(By.xpath("//a[@href='/feny']"))).click();
 
         //click on fen Philips
-        waitFor(2);
-        browser.findElement(By.cssSelector(".bs__title")).click();
+        browserWait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(".bs__title"))).click();
 
         //check item
-        waitFor(2);
-        var expectedName = browser.findElement(By.cssSelector(".detail__title--desktop")).getText();
+        var expectedName = browserWait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(".detail__title--desktop"))).getText();
 
         //add to cart
-        browser.findElement(By.cssSelector(".info-box__main-btn .add-to-cart-list")).click();
+        browserWait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(".info-box__main-btn .add-to-cart-list"))).click();
 
         //open cart
-        waitFor(2);
-        browser.findElement(By.cssSelector(".cross-sell__button__to-cart__to")).click();
-        //browserWait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(".cross-sell__button__to-cart__to"))).click();
+        browserWait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(".cross-sell__button__to-cart__to"))).click();
 
         //check items in cart
-        waitFor(2);
-        var actualName = browser.findElement(By.cssSelector(".cart-overview-item-row__title-and-params")).getText();
-        //var actualName = browserWait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(".cart-overview-item-row__title-and-params"))).getText();     //var actualName = browser.findElement(By.cssSelector(".cart-overview-item-row__title-and-params")).getText();
+        var actualName = browserWait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(".cart-overview-item-row__title-and-params"))).getText();     //var actualName = browser.findElement(By.cssSelector(".cart-overview-item-row__title-and-params")).getText();
 
         //check counts of items
         Assertions.assertEquals(expectedName, actualName);
@@ -90,13 +75,10 @@ public class HomePageTest {
     @Test
     void DeliveryMallTest () {
         //prices and delivery
-        browser.findElement(By.cssSelector(".list-item__link__text")).click();
-        //browserWait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(".list-item__link__text"))).click();
+        browserWait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(".list-item__link__text"))).click();
 
         //check partner delivery
-        waitFor(2);
-        WebElement button = browser.findElement(By.cssSelector(".osobni .cnt"));
-        //WebElement button = browserWait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(".osobni .cnt")));
+        WebElement button = browserWait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(".osobni .cnt")));
 
         //assert present partner delivery
         Assertions.assertTrue(button.isDisplayed());
@@ -104,16 +86,13 @@ public class HomePageTest {
     @Test
     void ComplaintsTest () {
         //click on everything about shopping
-        browser.findElement(By.xpath("//a[@href='/vse-nakupu']")).click();
-        //browserWait.until(ExpectedConditions.elementToBeClickable(By.xpath("//a[@href='/vse-nakupu']"))).click();
+        browserWait.until(ExpectedConditions.elementToBeClickable(By.xpath("//a[@href='/vse-nakupu']"))).click();
 
         //click on Complains
-        //browser.findElement(By.cssSelector("//a[@href='/vraceni-reklamace']")).click();
         browserWait.until(ExpectedConditions.elementToBeClickable(By.xpath("//a[@href='/vraceni-reklamace']"))).click();
 
         //click on servis
-        browser.findElement(By.xpath("//a[@href='/reklamace-zbozi']")).click();
-        //browserWait.until(ExpectedConditions.elementToBeClickable(By.xpath("//a[@href='/reklamace-zbozi']"))).click();
+        browserWait.until(ExpectedConditions.elementToBeClickable(By.xpath("//a[@href='/reklamace-zbozi']"))).click();
 
         //asertace presents of Partner servis
         WebElement button = browser.findElement(By.id("servis"));
@@ -122,9 +101,6 @@ public class HomePageTest {
 
     @Test
     void CoffeeTest () {
-        Cart cartPage = new Cart(browser); //functions for cart operations
-        MainMenu Menu = new MainMenu(browser); //functions for main menu items
-        Product productPage = new Product(browser);
 
         //click on Appliances
         Menu.MainMenuAppliances();
@@ -133,14 +109,10 @@ public class HomePageTest {
         browser.findElement(By.xpath("//a[@href='/espressa-kavovary']")).click();
 
         //click on Coffee maker
-        waitFor(2);
-        browser.findElement(By.cssSelector(".bs__name")).click();
-        //browserWait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(".bs__name"))).click();
+        browserWait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(".bs__name"))).click();
 
         //save an expected name of item
-        waitFor(2);
-        var expectedValue = browser.findElement(By.cssSelector(".detail__title--desktop")).getText();
-        //var expectedValue = browserWait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(".detail__title--desktop"))).getText();
+        var expectedValue = browserWait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(".detail__title--desktop"))).getText();
 
         //click add to card
         productPage.AddToCart();
