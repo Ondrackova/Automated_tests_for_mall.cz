@@ -38,8 +38,13 @@ public class Cart {
     }
 
    //name of actual products in the cart
-    String getProductName (int index) {
-        return browserWait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("cart-overview-item-row .cart-overview-item"))).getText();
+    String getProductActualName (int index) {
+        //return browserWait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("cart-overview-item-row .cart-overview-item"))).getText();
+        return browserWait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(".cart-overview-item-row__title-and-params"))).getText();     //var actualName = browser.findElement(By.cssSelector(".cart-overview-item-row__title-and-params")).getText();
+    }
+    //name of expected product in the cart
+    String getProductExpectedName (int index) {
+       return browserWait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(".detail__title--desktop"))).getText();
     }
 
 }

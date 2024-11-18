@@ -19,6 +19,10 @@ public class HomePageTest {
     Cart cartPage;
     MainMenu Menu;
     Product productPage;
+    ProductSelection productSelection;
+    SecondMenu secondMenu;
+    TopMenu topMenu;
+    Services servicesPage;
 
     @BeforeEach
     void beforeTest() {
@@ -32,6 +36,11 @@ public class HomePageTest {
         cartPage = new Cart(browser); //functions for cart operations
         Menu = new MainMenu(browser); //functions for main menu items
         productPage = new Product(browser);
+        productSelection = new ProductSelection(browser);
+        secondMenu = new SecondMenu(browser);
+        topMenu = new TopMenu(browser);
+        servicesPage = new Services(browser);
+
     }
 
     @Test
@@ -44,29 +53,26 @@ public class HomePageTest {
 
     @Test
     void HairDryerTest () {
-        MainMenu Menu = new MainMenu(browser);
-        ProductSelection productSelectionPage = new ProductSelection(browser);
 
         //click on Appliances
         Menu.MainMenuAppliances();
 
         //click on hair dryers /feny
-        browserWait.until(ExpectedConditions.elementToBeClickable(By.xpath("//a[@href='/feny']"))).click();
+        secondMenu.menuHairDryers();
 
         //click on fen Philips
-        browserWait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(".bs__title"))).click();
+        productPage.HairDryer();
 
         //check item
-        var expectedName = browserWait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(".detail__title--desktop"))).getText();
-
+        var expectedName = cartPage.getProductExpectedName(0);
         //add to cart
-        browserWait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(".info-box__main-btn .add-to-cart-list"))).click();
+        productPage.AddToCart();
 
         //open cart
-        browserWait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(".cross-sell__button__to-cart__to"))).click();
+        cartPage.open();
 
         //check items in cart
-        var actualName = browserWait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(".cart-overview-item-row__title-and-params"))).getText();     //var actualName = browser.findElement(By.cssSelector(".cart-overview-item-row__title-and-params")).getText();
+        var actualName = cartPage.getProductActualName(0);
 
         //check counts of items
         Assertions.assertEquals(expectedName, actualName);
@@ -75,7 +81,8 @@ public class HomePageTest {
     @Test
     void DeliveryMallTest () {
         //prices and delivery
-        browserWait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(".list-item__link__text"))).click();
+        topMenu.priceDelivery();
+        //browserWait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(".list-item__link__text"))).click();
 
         //check partner delivery
         WebElement button = browserWait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(".osobni .cnt")));
@@ -86,13 +93,16 @@ public class HomePageTest {
     @Test
     void ComplaintsTest () {
         //click on everything about shopping
-        browserWait.until(ExpectedConditions.elementToBeClickable(By.xpath("//a[@href='/vse-nakupu']"))).click();
+        topMenu.everythingAboutShopping();
+        //browserWait.until(ExpectedConditions.elementToBeClickable(By.xpath("//a[@href='/vse-nakupu']"))).click();
 
         //click on Complains
-        browserWait.until(ExpectedConditions.elementToBeClickable(By.xpath("//a[@href='/vraceni-reklamace']"))).click();
+        servicesPage.complains();
+        //browserWait.until(ExpectedConditions.elementToBeClickable(By.xpath("//a[@href='/vraceni-reklamace']"))).click();
 
         //click on servis
-        browserWait.until(ExpectedConditions.elementToBeClickable(By.xpath("//a[@href='/reklamace-zbozi']"))).click();
+        servicesPage.services();
+        //browserWait.until(ExpectedConditions.elementToBeClickable(By.xpath("//a[@href='/reklamace-zbozi']"))).click();
 
         //asertace presents of Partner servis
         WebElement button = browser.findElement(By.id("servis"));
@@ -106,14 +116,13 @@ public class HomePageTest {
         Menu.MainMenuAppliances();
 
         //click on Esspresso and coffee maker
-        browser.findElement(By.xpath("//a[@href='/espressa-kavovary']")).click();
+        secondMenu.menuCoffeeMakers();
 
         //click on Coffee maker
-        browserWait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(".bs__name"))).click();
+        productPage.coffeeMaker();
 
         //save an expected name of item
-        var expectedValue = browserWait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(".detail__title--desktop"))).getText();
-
+        var expectedName = cartPage.getProductExpectedName(0);
         //click add to card
         productPage.AddToCart();
 
@@ -121,8 +130,8 @@ public class HomePageTest {
         cartPage.open();
 
         //variable for actual value
-        //var actualValue = cartPage.getProductName(0);
-        var actualValue = browserWait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(".cart-overview-item-title"))).getText();
+        //var actualValue = cartPage.getProductActualName(0);
+        var actualName = browserWait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(".cart-overview-item-title"))).getText();
 
         //variable for counter
         var counter = browser.findElement(By.cssSelector(".article-counter__input")).getText();
@@ -130,7 +139,7 @@ public class HomePageTest {
         counter += "2";
 
         //assert item(Coffee maker)
-        Assertions.assertEquals(expectedValue, actualValue);
+        Assertions.assertEquals(expectedName, actualName);
         //assert count of items
         Assertions.assertEquals("2", counter);
     }
@@ -140,8 +149,7 @@ public class HomePageTest {
 
         cartPage.open();
         cartPage.goBack();
-        //cartPage.deleteAllCartItem();
-        //cartPage.deleteCartItem(0);
+
     }
 }
 

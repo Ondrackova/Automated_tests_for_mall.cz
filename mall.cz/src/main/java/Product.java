@@ -20,4 +20,14 @@ public class Product {
     void AddToCart () {
         browserWait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(".info-box__main-btn .add-to-cart-list"))).click();
     }
+
+    //click on Hair dryer
+    void HairDryer () {
+        browserWait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(".bs__title"))).click();
+    }
+    //click on Coffee maker
+    void coffeeMaker () {
+        browserWait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(".bs__name"))).click();
+
+    }
 }
