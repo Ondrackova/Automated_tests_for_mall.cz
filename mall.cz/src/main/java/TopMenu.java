@@ -10,10 +10,11 @@ public class TopMenu {
     WebDriverWait browserWait;
 
     //browser inicialization
-    public TopMenu (WebDriver browser) {
+    public TopMenu(WebDriver browser) {
         this.browser = browser;
         this.browserWait = new WebDriverWait(browser, Duration.ofSeconds(5));
     }
+
     //prices and delivery
     void priceDelivery () {
         browserWait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(".list-item__link__text"))).click();

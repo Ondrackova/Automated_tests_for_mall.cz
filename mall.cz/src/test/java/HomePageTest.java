@@ -10,9 +10,8 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
 
-public class HomePageTest {
-   //loadding browser
-    WebDriver browser = WebDriverManager.firefoxdriver().create();
+public class HomePageTest extends BaseTest{
+
     //add time for waiting 5 s
     WebDriverWait browserWait = new WebDriverWait(browser, Duration.ofSeconds(5));
 
@@ -25,7 +24,7 @@ public class HomePageTest {
     Services servicesPage;
 
     @BeforeEach
-    void beforeTest() {
+    void beforeTest () {
         //loading the web
         browser.get("https://mall.cz");
 
@@ -152,6 +151,5 @@ public class HomePageTest {
 
     }
 }
-
 
 

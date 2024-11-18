@@ -5,8 +5,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
 
-public class Product {
-
+public class Product{
     WebDriver browser;
     WebDriverWait browserWait;
 
@@ -15,6 +14,7 @@ public class Product {
         this.browser = browser;
         this.browserWait = new WebDriverWait(browser, Duration.ofSeconds(5));
     }
+
 
     //add item to the cart
     void AddToCart () {

@@ -5,14 +5,11 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
 
-public class Cart {
-    WebDriver browser;
-    WebDriverWait browserWait;
+public class Cart  extends MallPage{
 
-    //browser inicialization
+
     public Cart(WebDriver browser) {
-        this.browser = browser;
-        this.browserWait = new WebDriverWait(browser, Duration.ofSeconds(5));
+        super(browser);
     }
 
     //open page with cart
