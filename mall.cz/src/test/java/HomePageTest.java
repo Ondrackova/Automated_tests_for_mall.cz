@@ -10,7 +10,6 @@ import java.time.Duration;
 
 public class HomePageTest extends BaseTest{
 
-    //add time for waiting 5 s
     WebDriverWait browserWait = new WebDriverWait(browser, Duration.ofSeconds(5));
 
     Cart cartPage;
@@ -23,7 +22,7 @@ public class HomePageTest extends BaseTest{
 
     @BeforeEach
     void beforeTest () {
-        //loading the web
+
         browser.get("https://mall.cz");
 
         //accept cookies
@@ -39,92 +38,78 @@ public class HomePageTest extends BaseTest{
         secondMenu = new SecondMenu(browser);
         topMenu = new TopMenu(browser);
         servicesPage = new Services(browser);
-
+        cartPage = new Cart(browser);
     }
 
     @Test
     void homePageTest() {
-        //assert
+
         Assertions.assertEquals("MALL.CZ – bílé zboží, elektronika, PC, outdoor, hobby, hračky, kosmetika, chovatelské potřeby",
                 browser.getTitle());
-        //later click a button on its index (0,1,2)
-        //browser.findElements((By.cssSelector("legal-consent__button-container")).get(2).click());
     }
 
     @Test
-    void HairDryerTest () {
+    void hairDryerTest () {
 
-        //click on Appliances
         Menu.MainMenuAppliances();
 
-        //click on hair dryers /feny
         secondMenu.menuHairDryers();
 
-        //click on fen Philips
         productPage.HairDryer();
 
         //check item
         var expectedName = cartPage.getProductExpectedName(0);
-        //add to cart
+
         productPage.AddToCart();
 
-        //open cart
         cartPage.open();
 
         //check items in cart
         var actualName = cartPage.getProductActualName(0);
 
-        //check counts of items
         Assertions.assertEquals(expectedName, actualName);
     }
 
     @Test
-    void DeliveryMallTest () {
-        //prices and delivery
+    void deliveryMallTest () {
+
         topMenu.priceDelivery();
 
-        //check partner delivery
+        //button for partner delivery
         WebElement button = browserWait.until
                 (ExpectedConditions.elementToBeClickable(By.cssSelector(".osobni .cnt")));
 
-        //assert present partner delivery
         Assertions.assertTrue(button.isDisplayed());
     }
     @Test
-    void ComplaintsTest () {
-        //click on everything about shopping
+    void complaintsTest () {
+
         topMenu.everythingAboutShopping();
 
-        //click on Complains
         servicesPage.complains();
 
-        //click on servis
         servicesPage.services();
 
-        //assert presents of Partner servis
+        //button for Partner servis
         WebElement button = browser.findElement(By.id("servis"));
+
         Assertions.assertTrue(button.isDisplayed());
     }
 
     @Test
-    void CoffeeTest () {
+    void coffeeTest () {
 
-        //click on Appliances
         Menu.MainMenuAppliances();
 
-        //click on Esspresso and coffee maker
         secondMenu.menuCoffeeMakers();
 
-        //click on Coffee maker
         productPage.coffeeMaker();
 
-        //save an expected name of item
+        //variable for expected name of item
         var expectedName = cartPage.getProductExpectedName(0);
 
-        //click add to card
         productPage.AddToCart();
 
-        //go to the card
         cartPage.open();
 
         //variable for actual value
@@ -135,18 +120,14 @@ public class HomePageTest extends BaseTest{
         //2 items
         counter += "2";
 
-        //assert item(Coffee maker)
         Assertions.assertEquals(expectedName, actualName);
-        //assert count of items
         Assertions.assertEquals("2", counter);
     }
     @Test
     void cartOperations() {
-        Cart cartPage = new Cart(browser);
 
         cartPage.open();
         cartPage.goBack();
-
     }
 }
 
