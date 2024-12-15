@@ -1,3 +1,4 @@
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -5,7 +6,6 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-
 import java.time.Duration;
 
 public class HomePageTest extends BaseTest{
@@ -13,32 +13,32 @@ public class HomePageTest extends BaseTest{
     WebDriverWait browserWait = new WebDriverWait(browser, Duration.ofSeconds(5));
 
     Cart cartPage;
-    MainMenu Menu;
+    MainMenu menu;
     Product productPage;
     ProductSelection productSelection;
     SecondMenu secondMenu;
     TopMenu topMenu;
     Services servicesPage;
 
+    @Override
     @BeforeEach
     void beforeTest () {
 
-        browser.get("https://mall.cz");
-
-        //accept cookies
-        WebElement cookiesAcceptButton = browser.findElement
-                (By.cssSelector(".legal-consent__button-container"));
-
-        cookiesAcceptButton.click();
+        super.beforeTest();
 
         cartPage = new Cart(browser); //functions for cart operations
-        Menu = new MainMenu(browser); //functions for main menu items
+        menu = new MainMenu(browser); //functions for main menu items
         productPage = new Product(browser);
         productSelection = new ProductSelection(browser);
         secondMenu = new SecondMenu(browser);
         topMenu = new TopMenu(browser);
         servicesPage = new Services(browser);
         cartPage = new Cart(browser);
+    }
+
+    @AfterEach
+    void afterTest () {
+        browser.close();
     }
 
     @Test
@@ -51,16 +51,16 @@ public class HomePageTest extends BaseTest{
     @Test
     void hairDryerTest () {
 
-        Menu.MainMenuAppliances();
+        menu.mainMenuAppliances();
 
         secondMenu.menuHairDryers();
 
-        productPage.HairDryer();
+        productPage.hairDryer();
 
         //check item
         var expectedName = cartPage.getProductExpectedName(0);
 
-        productPage.AddToCart();
+        productPage.addToCart();
 
         cartPage.open();
 
@@ -77,9 +77,11 @@ public class HomePageTest extends BaseTest{
 
         //button for partner delivery
         WebElement button = browserWait.until
-                (ExpectedConditions.elementToBeClickable(By.cssSelector(".osobni .cnt")));
+                (ExpectedConditions.elementToBeClickable
+                        (By.cssSelector(".osobni .cnt")));
 
-        Assertions.assertTrue(button.isDisplayed());
+        Assertions.assertTrue
+                (button.isDisplayed());
     }
     @Test
     void complaintsTest () {
@@ -90,16 +92,18 @@ public class HomePageTest extends BaseTest{
 
         servicesPage.services();
 
-        //button for Partner servis
-        WebElement button = browser.findElement(By.id("servis"));
+        //button for Partner service
+        WebElement button = browser.findElement
+                (By.id("servis"));
 
-        Assertions.assertTrue(button.isDisplayed());
+        Assertions.assertTrue
+                (button.isDisplayed());
     }
 
     @Test
     void coffeeTest () {
 
-        Menu.MainMenuAppliances();
+        menu.mainMenuAppliances();
 
         secondMenu.menuCoffeeMakers();
 
@@ -108,20 +112,27 @@ public class HomePageTest extends BaseTest{
         //variable for expected name of item
         var expectedName = cartPage.getProductExpectedName(0);
 
-        productPage.AddToCart();
+        productPage.addToCart();
 
         cartPage.open();
 
         //variable for actual value
-        var actualName = browserWait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(".cart-overview-item-title"))).getText();
+        var actualName = browserWait.until
+                        (ExpectedConditions.elementToBeClickable
+                                (By.cssSelector(".cart-overview-item-title")))
+                .getText();
 
         //variable for counter
-        var counter = browser.findElement(By.cssSelector(".article-counter__input")).getText();
+        var counter = browser.findElement
+                        (By.cssSelector(".article-counter__input"))
+                .getText();
         //2 items
         counter += "2";
 
-        Assertions.assertEquals(expectedName, actualName);
-        Assertions.assertEquals("2", counter);
+        Assertions.assertEquals
+                (expectedName, actualName);
+        Assertions.assertEquals
+                ("2", counter);
     }
     @Test
     void cartOperations() {

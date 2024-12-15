@@ -9,14 +9,17 @@ public class MainMenu {
     WebDriver browser;
     WebDriverWait browserWait;
 
-    //browser inicialization
+    //browser initialization
     public MainMenu(WebDriver browser) {
         this.browser = browser;
         this.browserWait = new WebDriverWait(browser, Duration.ofSeconds(5));
     }
 
     //click on Appliances
-    void MainMenuAppliances() {
-        browserWait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(".desktop-menu__item-title"))).click();
+    void mainMenuAppliances() {
+        browserWait.until
+                (ExpectedConditions.elementToBeClickable
+                        (By.cssSelector(".desktop-menu__item-title")))
+                .click();
     }
 }

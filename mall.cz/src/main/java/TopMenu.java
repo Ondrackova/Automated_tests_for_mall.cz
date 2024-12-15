@@ -9,19 +9,23 @@ public class TopMenu {
     WebDriver browser;
     WebDriverWait browserWait;
 
-    //browser inicialization
+    //browser initialization
     public TopMenu(WebDriver browser) {
         this.browser = browser;
         this.browserWait = new WebDriverWait(browser, Duration.ofSeconds(5));
     }
 
-    //prices and delivery
     void priceDelivery () {
-        browserWait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(".list-item__link__text"))).click();
-    }
-    //click on everything about shopping
-    void everythingAboutShopping () {
-        browserWait.until(ExpectedConditions.elementToBeClickable(By.xpath("//a[@href='/vse-nakupu']"))).click();
+        browserWait.until
+                (ExpectedConditions.elementToBeClickable
+                        (By.cssSelector(".list-item__link__text")))
+                .click();
     }
 
+    void everythingAboutShopping () {
+        browserWait.until
+                (ExpectedConditions.elementToBeClickable
+                        (By.xpath("//a[@href='/vse-nakupu']")))
+                .click();
+    }
 }

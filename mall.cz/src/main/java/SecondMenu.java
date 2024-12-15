@@ -9,7 +9,7 @@ public class SecondMenu {
     WebDriver browser;
     WebDriverWait browserWait;
 
-    //browser inicialization
+    //browser initialization
     public SecondMenu(WebDriver browser) {
         this.browser = browser;
         this.browserWait = new WebDriverWait(browser, Duration.ofSeconds(5));

@@ -9,20 +9,29 @@ public class Services{
     WebDriver browser;
     WebDriverWait browserWait;
 
-    //browser inicialization
+    //browser initialization
     public Services(WebDriver browser) {
         this.browser = browser;
         this.browserWait = new WebDriverWait(browser, Duration.ofSeconds(5));
     }
+
     void checkingDelivery () {
-        browserWait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(".osobni .cnt")));
+        browserWait.until
+                (ExpectedConditions.elementToBeClickable
+                        (By.cssSelector(".osobni .cnt")));
     }
-    //click on Complains
+
     void complains () {
-        browserWait.until(ExpectedConditions.elementToBeClickable(By.xpath("//a[@href='/vraceni-reklamace']"))).click();
+        browserWait.until
+                (ExpectedConditions.elementToBeClickable
+                        (By.xpath("//a[@href='/vraceni-reklamace']")))
+                .click();
 
     }
     void services () {
-        browserWait.until(ExpectedConditions.elementToBeClickable(By.xpath("//a[@href='/reklamace-zbozi']"))).click();
+        browserWait.until
+                (ExpectedConditions.elementToBeClickable
+                        (By.xpath("//a[@href='/reklamace-zbozi']")))
+                .click();
     }
 }

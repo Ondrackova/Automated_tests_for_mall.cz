@@ -9,20 +9,28 @@ public class MallPage {
     WebDriver browser;
     WebDriverWait browserWait;
 
-    //browser inicialization
+    //browser initialization
     public MallPage(WebDriver browser) {
         this.browser = browser;
         this.browserWait = new WebDriverWait(browser, Duration.ofSeconds(5));
     }
+
     void mainLogo () {
-        browserWait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(".basic-link .header__logo .nuxt-link-exact-active .nuxt-link-active .basic-link--primary"))).click();
+        browserWait.until
+                (ExpectedConditions.elementToBeClickable
+                        (By.cssSelector(".basic-link .header__logo .nuxt-link-exact-active .nuxt-link-active .basic-link--primary")))
+                .click();
     }
     void logIn () {
-        browserWait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(".mobile-icons__item__icon"))).click();
+        browserWait.until
+                (ExpectedConditions.elementToBeClickable
+                        (By.cssSelector(".mobile-icons__item__icon")))
+                .click();
     }
     void goToCart() {
-        browserWait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(".mobile-icons__item .mobile-icons__cart"))).click();
+        browserWait.until
+                (ExpectedConditions.elementToBeClickable
+                        (By.cssSelector(".mobile-icons__item .mobile-icons__cart")))
+                .click();
     }
-
-
 }

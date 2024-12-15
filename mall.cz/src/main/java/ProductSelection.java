@@ -9,22 +9,29 @@ public class ProductSelection {
     WebDriver browser;
     WebDriverWait browserWait;
 
-    //browser inicialization
+    //browser initialization
     public ProductSelection(WebDriver browser) {
         this.browser = browser;
         this.browserWait = new WebDriverWait(browser, Duration.ofSeconds(5));
     }
 
-    void ShowMoreAboutProduct () {
-            browserWait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("description-accordion__open"))).click();
+        void showMoreAboutProduct () {
+            browserWait.until
+                    (ExpectedConditions.elementToBeClickable
+                            (By.cssSelector("description-accordion__open")))
+                    .click();
         }
 
-        void SelectPopularProduct (int index) {
-            browserWait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("bs__name"))).click();
+        void selectPopularProduct (int index) {
+            browserWait.until
+                    (ExpectedConditions.elementToBeClickable
+                            (By.cssSelector("bs__name"))).click();
         }
 
-        void ShowMorePopularProducts () {
-            browserWait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("bs__show-more-link"))).click();
+        void showMorePopularProducts () {
+            browserWait.until
+                    (ExpectedConditions.elementToBeClickable
+                            (By.cssSelector("bs__show-more-link")))
+                    .click();
         }
-
     }

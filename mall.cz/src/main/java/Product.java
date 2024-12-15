@@ -9,25 +9,30 @@ public class Product{
     WebDriver browser;
     WebDriverWait browserWait;
 
-    //browser inicialization
+    //browser initialization
     public Product(WebDriver browser) {
         this.browser = browser;
         this.browserWait = new WebDriverWait(browser, Duration.ofSeconds(5));
     }
 
-
-    //add item to the cart
-    void AddToCart () {
-        browserWait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(".info-box__main-btn .add-to-cart-list"))).click();
+    void addToCart () {
+        browserWait.until
+                (ExpectedConditions.elementToBeClickable
+                        (By.cssSelector(".info-box__main-btn .add-to-cart-list")))
+                .click();
     }
 
-    //click on Hair dryer
-    void HairDryer () {
-        browserWait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(".bs__title"))).click();
+    void hairDryer () {
+        browserWait.until
+                (ExpectedConditions.elementToBeClickable
+                        (By.cssSelector(".bs__title")))
+                .click();
     }
-    //click on Coffee maker
+
     void coffeeMaker () {
-        browserWait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(".bs__name"))).click();
-
+        browserWait.until
+                (ExpectedConditions.elementToBeClickable
+                        (By.cssSelector(".bs__name")))
+                .click();
     }
 }
