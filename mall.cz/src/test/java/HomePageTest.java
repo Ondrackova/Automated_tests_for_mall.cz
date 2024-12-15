@@ -1,9 +1,7 @@
-import io.github.bonigarcia.wdm.WebDriverManager;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -29,7 +27,9 @@ public class HomePageTest extends BaseTest{
         browser.get("https://mall.cz");
 
         //accept cookies
-        WebElement cookiesAcceptButton = browser.findElement(By.cssSelector(".legal-consent__button-container"));
+        WebElement cookiesAcceptButton = browser.findElement
+                (By.cssSelector(".legal-consent__button-container"));
+
         cookiesAcceptButton.click();
 
         cartPage = new Cart(browser); //functions for cart operations
@@ -45,7 +45,8 @@ public class HomePageTest extends BaseTest{
     @Test
     void homePageTest() {
         //assert
-        Assertions.assertEquals("MALL.CZ – bílé zboží, elektronika, PC, outdoor, hobby, hračky, kosmetika, chovatelské potřeby", browser.getTitle());
+        Assertions.assertEquals("MALL.CZ – bílé zboží, elektronika, PC, outdoor, hobby, hračky, kosmetika, chovatelské potřeby",
+                browser.getTitle());
         //later click a button on its index (0,1,2)
         //browser.findElements((By.cssSelector("legal-consent__button-container")).get(2).click());
     }
@@ -81,10 +82,10 @@ public class HomePageTest extends BaseTest{
     void DeliveryMallTest () {
         //prices and delivery
         topMenu.priceDelivery();
-        //browserWait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(".list-item__link__text"))).click();
 
         //check partner delivery
-        WebElement button = browserWait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(".osobni .cnt")));
+        WebElement button = browserWait.until
+                (ExpectedConditions.elementToBeClickable(By.cssSelector(".osobni .cnt")));
 
         //assert present partner delivery
         Assertions.assertTrue(button.isDisplayed());
@@ -93,17 +94,14 @@ public class HomePageTest extends BaseTest{
     void ComplaintsTest () {
         //click on everything about shopping
         topMenu.everythingAboutShopping();
-        //browserWait.until(ExpectedConditions.elementToBeClickable(By.xpath("//a[@href='/vse-nakupu']"))).click();
 
         //click on Complains
         servicesPage.complains();
-        //browserWait.until(ExpectedConditions.elementToBeClickable(By.xpath("//a[@href='/vraceni-reklamace']"))).click();
 
         //click on servis
         servicesPage.services();
-        //browserWait.until(ExpectedConditions.elementToBeClickable(By.xpath("//a[@href='/reklamace-zbozi']"))).click();
 
-        //asertace presents of Partner servis
+        //assert presents of Partner servis
         WebElement button = browser.findElement(By.id("servis"));
         Assertions.assertTrue(button.isDisplayed());
     }
@@ -122,6 +120,7 @@ public class HomePageTest extends BaseTest{
 
         //save an expected name of item
         var expectedName = cartPage.getProductExpectedName(0);
+
         //click add to card
         productPage.AddToCart();
 
@@ -129,7 +128,6 @@ public class HomePageTest extends BaseTest{
         cartPage.open();
 
         //variable for actual value
-        //var actualValue = cartPage.getProductActualName(0);
         var actualName = browserWait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(".cart-overview-item-title"))).getText();
 
         //variable for counter
