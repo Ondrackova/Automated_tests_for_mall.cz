@@ -5,12 +5,8 @@ import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
-import java.time.Duration;
 
 public class HomePageTest extends BaseTest{
-
-    WebDriverWait browserWait = new WebDriverWait(browser, Duration.ofSeconds(5));
 
     Cart cartPage;
     MainMenu menu;
@@ -55,6 +51,15 @@ public class HomePageTest extends BaseTest{
 
         secondMenu.menuHairDryers();
 
+        //lego advertising
+        try {
+            WebElement legoAdvertising = browserWait.until
+                    (ExpectedConditions.elementToBeClickable(By.id("l-exponea-close")));
+            legoAdvertising.click();
+        } catch (Exception e) {
+            System.out.println("Lego advertising not found");
+        }
+
         productPage.hairDryer();
 
         //check item
@@ -76,12 +81,12 @@ public class HomePageTest extends BaseTest{
         topMenu.priceDelivery();
 
         //button for partner delivery
-        WebElement button = browserWait.until
+        WebElement buttonPartnerDelivery = browserWait.until
                 (ExpectedConditions.elementToBeClickable
                         (By.cssSelector(".osobni .cnt")));
 
         Assertions.assertTrue
-                (button.isDisplayed());
+                (buttonPartnerDelivery.isDisplayed());
     }
     @Test
     void complaintsTest () {
@@ -93,11 +98,11 @@ public class HomePageTest extends BaseTest{
         servicesPage.services();
 
         //button for Partner service
-        WebElement button = browser.findElement
+        WebElement buttonPartnerService = browser.findElement
                 (By.id("servis"));
 
         Assertions.assertTrue
-                (button.isDisplayed());
+                (buttonPartnerService.isDisplayed());
     }
 
     @Test
@@ -107,7 +112,25 @@ public class HomePageTest extends BaseTest{
 
         secondMenu.menuCoffeeMakers();
 
+        //lego advertising
+        try {
+            WebElement legoAdvertising = browserWait.until
+                    (ExpectedConditions.elementToBeClickable(By.id("l-exponea-close")));
+            legoAdvertising.click();
+        } catch (Exception e) {
+            System.out.println("Lego advertising not found");
+        }
+
         productPage.coffeeMaker();
+
+        //lego advertising
+        try {
+            WebElement legoAdvertising = browserWait.until
+                    (ExpectedConditions.elementToBeClickable(By.id("l-exponea-close")));
+            legoAdvertising.click();
+        } catch (Exception e) {
+            System.out.println("Lego advertising not found");
+        }
 
         //variable for expected name of item
         var expectedName = cartPage.getProductExpectedName(0);
@@ -122,18 +145,36 @@ public class HomePageTest extends BaseTest{
                                 (By.cssSelector(".cart-overview-item-title")))
                 .getText();
 
-        //variable for counter
-        var counter = browser.findElement
-                        (By.cssSelector(".article-counter__input"))
+        //variable for actual price
+        var priceOne = browserWait.until
+                (ExpectedConditions.presenceOfElementLocated
+                        (By.cssSelector(".cart-layout__summary-with-vat.cart-layout__total_price")))
                 .getText();
-        //2 items
-        counter += "2";
+        priceOne = priceOne.replaceAll("\\D", "");
+
+        int priceOneItem = Integer.parseInt(priceOne);
+
+
+        WebElement counter= browserWait.until(ExpectedConditions.elementToBeClickable
+                (By.xpath("//input[@name='amount[4022296]'][@class='article-counter__input']")));
+
+        //counter.clear();
+        counter.sendKeys("2");
+
+        //variable for actual price
+        var priceTwo = browserWait.until
+                        (ExpectedConditions.presenceOfElementLocated
+                                (By.cssSelector(".cart-layout__summary-with-vat.cart-layout__total_price")))
+                .getText();
+        priceTwo = priceTwo.replaceAll("\\D", "");
+        int priceTwoItem = Integer.parseInt(priceTwo);
 
         Assertions.assertEquals
                 (expectedName, actualName);
         Assertions.assertEquals
-                ("2", counter);
+                (priceOneItem * 2, priceTwoItem);
     }
+
     @Test
     void cartOperations() {
 
