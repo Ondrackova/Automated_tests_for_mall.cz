@@ -3,6 +3,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
@@ -153,13 +154,16 @@ public class HomePageTest extends BaseTest{
         priceOne = priceOne.replaceAll("\\D", "");
 
         int priceOneItem = Integer.parseInt(priceOne);
+        System.out.println(priceOneItem);
 
 
-        WebElement counter= browser.findElements(By.cssSelector(".article-counter__input")).get(2);
+        WebElement counter= browser.findElements(By.cssSelector(".article-counter__input")).get(1);
         counter.click();
 
-        //counter.clear();
+        counter.clear();
         counter.sendKeys("2");
+        counter.click();
+        counter.sendKeys(Keys.ENTER);
 
         //variable for actual price
         var priceTwo = browserWait.until
@@ -168,6 +172,7 @@ public class HomePageTest extends BaseTest{
                 .getText();
         priceTwo = priceTwo.replaceAll("\\D", "");
         int priceTwoItem = Integer.parseInt(priceTwo);
+        System.out.println(priceTwoItem);
 
         Assertions.assertEquals
                 (expectedName, actualName);
