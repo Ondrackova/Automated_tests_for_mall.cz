@@ -155,8 +155,8 @@ public class HomePageTest extends BaseTest{
         int priceOneItem = Integer.parseInt(priceOne);
 
 
-        WebElement counter= browserWait.until(ExpectedConditions.elementToBeClickable
-                (By.xpath("//input[@name='amount[4022296]'][@class='article-counter__input']")));
+        WebElement counter= browser.findElements(By.cssSelector(".article-counter__input")).get(2);
+        counter.click();
 
         //counter.clear();
         counter.sendKeys("2");
