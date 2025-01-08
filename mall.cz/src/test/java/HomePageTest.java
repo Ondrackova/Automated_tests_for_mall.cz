@@ -109,7 +109,7 @@ public class HomePageTest extends BaseTest{
     }
 
     @Test
-    void coffeeTest () throws InterruptedException {
+    void coffeeTest () {
 
         menu.mainMenuAppliances();
 
