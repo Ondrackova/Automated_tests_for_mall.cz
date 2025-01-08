@@ -7,6 +7,8 @@ import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
+import java.util.List;
+
 public class HomePageTest extends BaseTest{
 
     Cart cartPage;
@@ -107,7 +109,7 @@ public class HomePageTest extends BaseTest{
     }
 
     @Test
-    void coffeeTest () {
+    void coffeeTest () throws InterruptedException {
 
         menu.mainMenuAppliances();
 
@@ -156,14 +158,19 @@ public class HomePageTest extends BaseTest{
         int priceOneItem = Integer.parseInt(priceOne);
         System.out.println(priceOneItem);
 
-
-        WebElement counter= browser.findElements(By.cssSelector(".article-counter__input")).get(1);
+        List<WebElement> counters = browserWait.until
+                (ExpectedConditions.presenceOfAllElementsLocatedBy
+                        (By.cssSelector(".article-counter__input")));
+        WebElement counter = counters.get(1);
         counter.click();
 
         counter.clear();
         counter.sendKeys("2");
         counter.click();
         counter.sendKeys(Keys.ENTER);
+
+        browserWait.until(ExpectedConditions.attributeToBe(counter, "value", "2"));
+
 
         //variable for actual price
         var priceTwo = browserWait.until
