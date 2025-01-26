@@ -155,7 +155,7 @@ public class HomePageTest extends BaseTest{
                 .getText();
         priceOne = priceOne.replaceAll("\\D", "");
 
-        int priceOneItem = Integer.parseInt(priceOne);
+        var priceOneItem = Integer.parseInt(priceOne);
         System.out.println(priceOneItem);
 
         List<WebElement> counters = browserWait.until
@@ -178,7 +178,7 @@ public class HomePageTest extends BaseTest{
                                 (By.cssSelector(".cart-layout__summary-with-vat.cart-layout__total_price")))
                 .getText();
         priceTwo = priceTwo.replaceAll("\\D", "");
-        int priceTwoItem = Integer.parseInt(priceTwo);
+        var priceTwoItem = Integer.parseInt(priceTwo);
         System.out.println(priceTwoItem);
 
         Assertions.assertEquals
